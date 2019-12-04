@@ -1,13 +1,22 @@
-const cage = document.getElementById('body');
+const cage = document.getElementById('cage');
 let player = document.getElementById('player');
 let square = document.getElementById('square');
+let size = 2;
+let c = 98/size;
 
-const playerPos = [6, 11];
-//player.style.left = playerPos[0] + 'rem';
-//player.style.top = playerPos[1] + 'rem';
+const playerPos = [2, 2];
+player.style.height = size + '%';
+player.style.width = size + '%';
 
-const squarePos = [(Math.round(Math.random() * 100)), (Math.round(Math.random() * 100))];
-square.style.left = squarePos[0] + 'vw';
-square.style.top = squarePos[1] + 'vh';
+player.style.left = playerPos[0] + '%';
+player.style.top = playerPos[1] + '%';
 
+const squarePos = [(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size];
+square.style.height = size + '%';
+square.style.width = size + '%';
 
+square.style.left = squarePos[0] + '%';
+square.style.top = squarePos[1] + '%';
+square.style.right = squarePos[0] + '%';
+square.style.bottom = squarePos[1] + '%';
+  
