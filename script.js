@@ -17,6 +17,7 @@ square.style.width = size + '%';
 
 square.style.left = squarePos[0] + '%';
 square.style.top = squarePos[1] + '%';
+<<<<<<< HEAD
   
 if ((player.style.left === square.style.left /*player arr index 01 is equal to square indes 01.*/) && (player.style.top === square.style.top )) {
   //square becomes snake and removes square id
@@ -39,5 +40,24 @@ main.appendChild(newSquare);
 //add class player
 console.log(playerPos);
 //move block
- 
 
+const move = (event) => {
+ if (event.key === 'ArrowRight') {
+   playerPos[0] += 2;
+   player.style.left = playerPos[0] + '%';
+   event.preventDefault();
+ } else if (event.key === 'ArrowLeft') {
+   playerPos[0] -= 2;
+   player.style.left = playerPos[0] + '%';
+   event.preventDefault();
+ } else if (event.key === 'ArrowUp') {
+   playerPos[1] -= 2;
+   player.style.top = playerPos[1] + '%';
+   event.preventDefault();
+ } else if (event.key === 'ArrowDown') {
+   playerPos[1] += 2;
+   player.style.top = playerPos[1] + '%';
+   event.preventDefault();
+ }
+};
+document.addEventListener('keydown', move);

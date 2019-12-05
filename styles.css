@@ -2,7 +2,7 @@ html {
   box-sizing: border-box;
 }
 *,
-*::before, 
+*::before,
 *::after {
   box-sizing: inherit;
 }
@@ -11,7 +11,7 @@ html {
   border: 2vh solid #cc0000;
   height: 100vh;
   width:  100vh;
-  
+
 }
 #snake {
   background-color: black;
