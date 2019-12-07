@@ -1,63 +1,91 @@
-const cage = document.getElementById('cage');
-let player = document.getElementById('snake');
-let square = document.getElementById('square');
-let size = 2;
-let c = 98/size;
+const cage = document.getElementById('cage'),
+      scores = [0];
 
-const playerPos = [2, 2];
-player.style.height = size + '%';
-player.style.width = size + '%';
-
-player.style.left = playerPos[0] + '%';
-player.style.top = playerPos[1] + '%';
-
-const squarePos = [(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size];
-square.style.height = size + '%';
-square.style.width = size + '%';
-
-square.style.left = squarePos[0] + '%';
-square.style.top = squarePos[1] + '%';
-<<<<<<< HEAD
-  
-if ((player.style.left === square.style.left /*player arr index 01 is equal to square indes 01.*/) && (player.style.top === square.style.top )) {
-  //square becomes snake and removes square id
-  //takes coordinates inside an array from square and puts it into snake array
-  //when square randomly regenerates it adds coordinates back to array
-}
-const squareArr = [squarePos[0], squarePos[1]];
-playerPos.reverse();
-while (squareArr.length > 0) {
-  playerPos.push(squareArr.pop());
-}
-playerPos.reverse();
-//remove id square
-square.classList.add('snakeBody');
-square.removeAttribute(square);
-//creat new div with id square
-let newSquare = document.createElement('div');
-newSquare.setAttribute('id', 'square');
-main.appendChild(newSquare);
-//add class player
-console.log(playerPos);
-//move block
+let playerPos,
+    squarePos,
+    gameScore = document.getElementById('score');
+    square = document.getElementById('square'),
+    player = document.querySelector('.snakeBody'),
+    divEl = document.createElement('div'),
+    size = 2,
+    c = 98/size;
 
 const move = (event) => {
  if (event.key === 'ArrowRight') {
-   playerPos[0] += 2;
-   player.style.left = playerPos[0] + '%';
+   moreSnake();
+   playerPos[0][0] += size;
+   player.style.left = playerPos[0][0]+ '%';
+   player.style.height = size + '%';
+   player.style.width = size + '%';
+   player.style.top = playerPos[0][1]+ '%';
    event.preventDefault();
  } else if (event.key === 'ArrowLeft') {
-   playerPos[0] -= 2;
-   player.style.left = playerPos[0] + '%';
+   moreSnake();
+   playerPos[0][0] -= size;
+   player.style.left = playerPos[0][0] + '%';
+   player.style.top = playerPos[0][1] + '%';
+   player.style.height = size + '%';
+   player.style.width = size + '%';
    event.preventDefault();
  } else if (event.key === 'ArrowUp') {
-   playerPos[1] -= 2;
-   player.style.top = playerPos[1] + '%';
+   moreSnake();
+   playerPos[0][1] -= size;
+   player.style.top = playerPos[0][1] + '%';
+   player.style.left = playerPos[0][0] + '%';
+   player.style.height = size + '%';
+   player.style.width = size + '%';
    event.preventDefault();
  } else if (event.key === 'ArrowDown') {
-   playerPos[1] += 2;
-   player.style.top = playerPos[1] + '%';
+   moreSnake();
+   playerPos[0][1] += size;
+   player.style.top = playerPos[0][1] + '%';
+   player.style.left = playerPos[0][0] + '%';
+   player.style.height = size + '%';
+   player.style.width = size + '%';
    event.preventDefault();
  }
 };
-document.addEventListener('keydown', move);
+
+gameStart = () => {
+    gameScore.textContent = `Score: ${scores[0]}`;
+    cage.appendChild(divEl);
+    divEl.className = 'snakeBody';
+    player = document.querySelector('.snakeBody');
+    playerPos = [ [size, size] ];
+    player.style.height = size + '%';
+    player.style.width = size + '%';
+
+    player.style.left = playerPos[0][0] + '%';
+    player.style.top = playerPos[0][1] + '%';
+    squarePos = [ [(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size] ];
+    square.style.height = size + '%';
+    square.style.width = size + '%';
+
+    square.style.left = squarePos[0][0] + '%';
+    square.style.top = squarePos[0][1] + '%';
+    document.addEventListener('keydown', move);
+    }
+gameStart();
+const moreSnake = () => {
+  if ((player.style.left.localeCompare(square.style.left) === 0) && (player.style.top.localeCompare(square.style.top) === 0)) {
+    ++scores[0];
+    gameScore.textContent = `Score: ${scores[0]}`;
+    squarePos = [ [(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size] ];
+    square.style.left = squarePos[0][0] + '%';
+    square.style.top = squarePos[0][1] + '%';
+    player.before(divEl);
+    divEl.className = 'snakeBody';
+    player = document.querySelector('.snakeBody');
+  } else {
+    cage.append(player);
+    player = document.querySelector('.snakeBody');
+    divEl = document.createElement('div');
+    playerPos.unshift(playerPos.pop());
+  }
+}
+
+//resetGame = () => {
+  //gameStart();
+  //reset score
+//}
+//document.getElementById('reset').addEventListener('click', resetGame)

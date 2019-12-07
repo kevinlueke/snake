@@ -1,24 +1,34 @@
-html {
-  box-sizing: border-box;
-}
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+  box-sizing: border-Box;
 }
+
 #cage {
   margin: 0 auto;
   border: 2vh solid #cc0000;
-  height: 100vh;
-  width:  100vh;
+  height: 90vh;
+  width:  90vh;
+  position: relative;
 
 }
-#snake {
+
+.snakeBody {
   background-color: black;
-  position: relative;
+  position: absolute;
+  border-radius: 25%;
 }
 
 #square {
   background-color: red;
-  position: relative;
+  position: absolute;
+  border-radius: 25%;
+}
+
+#score {
+  position: absolute;
+  top: 1rem;
+  left: 15rem;
+  display: inline-block;
+  font-size: 2rem;
 }
