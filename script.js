@@ -1,8 +1,9 @@
 const cage = document.getElementById('cage');
 let player = document.getElementById('snake');
 let square = document.getElementById('square');
+let dir;
 let size = 2;
-let c = 98/size;
+let c = 98 / size;
 
 const playerPos = [2, 2];
 player.style.height = size + '%';
@@ -18,23 +19,72 @@ square.style.width = size + '%';
 square.style.left = squarePos[0] + '%';
 square.style.top = squarePos[1] + '%';
 
-const move = (event) => {
- if (event.key === 'ArrowRight') {
-   playerPos[0] += 2;
-   player.style.left = playerPos[0] + '%';
-   event.preventDefault();
- } else if (event.key === 'ArrowLeft') {
-   playerPos[0] -= 2;
-   player.style.left = playerPos[0] + '%';
-   event.preventDefault();
- } else if (event.key === 'ArrowUp') {
-   playerPos[1] -= 2;
-   player.style.top = playerPos[1] + '%';
-   event.preventDefault();
- } else if (event.key === 'ArrowDown') {
-   playerPos[1] += 2;
-   player.style.top = playerPos[1] + '%';
-   event.preventDefault();
- }
-};
-document.addEventListener('keydown', move);
+
+
+window.addEventListener('keydown', event => {
+  if (event.key === 'ArrowRight') {
+    dir = 'right';
+
+    let timeout = value => {
+      setTimeout(() => {
+        player.style.left = playerPos[0] + '%';
+
+        playerPos[0] += 2
+
+        if (dir === 'right') {
+          timeout(value)
+        }
+      }, 150)
+    }
+    timeout(playerPos[0]);
+
+  } else if (event.key === 'ArrowLeft') {
+    dir = 'left';
+
+    let timeout = value => {
+      setTimeout(() => {
+        player.style.left = playerPos[0] + '%';
+
+        playerPos[0] -= 2;
+
+        if (dir === 'left') {
+          timeout(value)
+        }
+      }, 150)
+    }
+    timeout(playerPos[0]);
+
+
+  } else if (event.key === 'ArrowUp') {
+    dir = 'up';
+    let timeout = value => {
+      setTimeout(() => {
+        player.style.top = playerPos[1] + '%';
+
+        playerPos[1] -= 2
+        if (dir === 'up') {
+          timeout(value)
+        }
+      }, 150)
+    }
+    timeout(playerPos[1]);
+
+
+  } else if (event.key === 'ArrowDown') {
+    dir = 'down';
+    let timeout = value => {
+      setTimeout(() => {
+        player.style.top = playerPos[1] + '%';
+
+        playerPos[1] += 2
+        if (dir === 'down') {
+          timeout(value)
+        }
+      }, 150)
+    }
+    timeout(playerPos[1]);
+
+
+  }
+
+});
