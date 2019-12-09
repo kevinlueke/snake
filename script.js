@@ -1,23 +1,24 @@
-const cage = document.getElementById('cage'),
-      scores = [0];
+const cage = document.getElementById('cage');
 
 let playerPos,
     squarePos,
-    gameScore = document.getElementById('score');
+    scores = 0,
+    gameScore = document.getElementById('score'),
     square = document.getElementById('square'),
     player = document.querySelector('.snakeBody'),
     divEl = document.createElement('div'),
-    size = 2,
+    size = 4,
+    playerLoc = [],
     c = 98/size;
 
 const move = (event) => {
  if (event.key === 'ArrowRight') {
    moreSnake();
    playerPos[0][0] += size;
-   player.style.left = playerPos[0][0]+ '%';
+   player.style.left = playerPos[0][0] + '%';
    player.style.height = size + '%';
    player.style.width = size + '%';
-   player.style.top = playerPos[0][1]+ '%';
+   player.style.top = playerPos[0][1] + '%';
    event.preventDefault();
  } else if (event.key === 'ArrowLeft') {
    moreSnake();
@@ -47,11 +48,12 @@ const move = (event) => {
 };
 
 gameStart = () => {
-    gameScore.textContent = `Score: ${scores[0]}`;
+    gameScore.textContent = `Score: ${scores}`;
     cage.appendChild(divEl);
     divEl.className = 'snakeBody';
     player = document.querySelector('.snakeBody');
     playerPos = [ [size, size] ];
+    playerLoc.push(playerPos);
     player.style.height = size + '%';
     player.style.width = size + '%';
 
@@ -67,9 +69,10 @@ gameStart = () => {
     }
 gameStart();
 const moreSnake = () => {
+  playerLoc.push(playerPos);
   if ((player.style.left.localeCompare(square.style.left) === 0) && (player.style.top.localeCompare(square.style.top) === 0)) {
     ++scores[0];
-    gameScore.textContent = `Score: ${scores[0]}`;
+    gameScore.textContent = `Score: ${++scores}`;
     squarePos = [ [(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size] ];
     square.style.left = squarePos[0][0] + '%';
     square.style.top = squarePos[0][1] + '%';
@@ -78,9 +81,11 @@ const moreSnake = () => {
     player = document.querySelector('.snakeBody');
   } else {
     cage.append(player);
+    playerLoc.pop();
     player = document.querySelector('.snakeBody');
     divEl = document.createElement('div');
-    playerPos.unshift(playerPos.pop());
+    //playerPos.unshift(playerPos.pop());
+    console.log(playerLoc);
   }
 }
 
