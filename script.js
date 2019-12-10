@@ -2,6 +2,7 @@ const cage = document.getElementById('cage');
 
 let playerPos,
     squarePos,
+    dir,
     scores = 0,
     gameScore = document.getElementById('score'),
     square = document.getElementById('square'),
@@ -9,12 +10,14 @@ let playerPos,
     divEl = document.createElement('div'),
     size = 4,
     playerLoc = [],
+    i = 0,
+    j = 0,
     c = 98/size;
 
-// Directions the snake moves 
+//Directions the snake moves 
 const move = (event) => {
-  if (event.key === 'ArrowRight') {
-
+  if (event.key === 'ArrowRight' && dir !== 'left') {
+    j = 0
     event.preventDefault();
     dir = 'right';
     let timeout = value => {
@@ -31,14 +34,16 @@ const move = (event) => {
          player.style.width = size + '%';
          player.style.top = playerPos[0][1] + '%';
          timeout(value);
-
         }
-      }, 200)
+      }, 100)
    }
-   timeout(playerPos[0][0]);
+     if (i === 0) {
+         ++i;
+         timeout(playerPos[0][0]);
+     }
 
-  } else if (event.key === 'ArrowLeft') {
-
+  } else if (event.key === 'ArrowLeft' && dir !== 'right') {
+    j = 0;
     event.preventDefault();
 
     dir = 'left';
@@ -58,13 +63,18 @@ const move = (event) => {
           timeout(value);
 
         }
-      }, 200)
+      }, 100)
     }
-   timeout(playerPos[0][0]);
+   
+     if (i === 0) {
+         ++i;
+         timeout(playerPos[0][0]);
+     }
 
 
-  } else if (event.key === 'ArrowUp') {
 
+  } else if (event.key === 'ArrowUp' && dir !== 'down') {
+    i = 0;
     event.preventDefault();
 
     dir = 'up';
@@ -80,12 +90,16 @@ const move = (event) => {
           player.style.width = size + '%';
           timeout(value);
         }
-      }, 200)
+      }, 100)
     }
-    timeout(playerPos[0][1]);
+    
+     if (j === 0) {
+         ++j;
+         timeout(playerPos[0][1]);
+     }
 
-
-  } else if (event.key === 'ArrowDown') {
+  } else if (event.key === 'ArrowDown' && dir !== 'up') {
+    i = 0;
     event.preventDefault();
     dir = 'down';
     let timeout = value => {
@@ -101,11 +115,15 @@ const move = (event) => {
           player.style.width = size + '%';
           timeout(value);
         }
-      }, 200)
+      }, 100)
     }
-    timeout(playerPos[0][1]);
+    
+     if (j === 0) {
+         ++j;
+         timeout(playerPos[0][1]);
+     }
   }
-    console.log(playerLoc);
+    //console.log(playerLoc);
 }
 gameStart = () => {
     gameScore.textContent = `Score: ${scores}`;
@@ -172,6 +190,7 @@ const moreSnake = () => {
 
 // Takes the already existing div and moves it to the end
 // It will then update the current player and updates div
+    console.log(playerPos);
     cage.append(player);
     player = document.querySelector('.snakeBody');
     divEl = document.createElement('div');
