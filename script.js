@@ -172,8 +172,6 @@ gameStart();
 const moreSnake = () => {
   if ((player.style.left.localeCompare(square.style.left) === 0) && (player.style.top.localeCompare(square.style.top) === 0)) {
     gameScore.textContent = `Score: ${++scores}`;
-    ++scores;
-    gameScore.textContent = `Score: ${scores}`;
     //updates squares random position
     squarePos = [
       [(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size]
