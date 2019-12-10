@@ -10,7 +10,8 @@ let playerPos,
     size = 4,
     playerLoc = [],
     c = 98/size;
-    
+
+// Directions the snake moves 
 const move = (event) => {
   if (event.key === 'ArrowRight') {
 
@@ -24,6 +25,7 @@ const move = (event) => {
          moreSnake();
          playerPos[0][0] += size;
         // playerLoc.push(playerPos);
+         // updating snakes position
          player.style.left = playerPos[0][0] + '%';
          player.style.height = size + '%';
          player.style.width = size + '%';
@@ -105,15 +107,15 @@ const move = (event) => {
   }
     console.log(playerLoc);
 }
-
 gameStart = () => {
     gameScore.textContent = `Score: ${scores}`;
+//Creates a div for snake and selects it, styles it
     cage.appendChild(divEl);
     divEl.className = 'snakeBody';
     player = document.querySelector('.snakeBody');
     playerPos = [ [size, size] ];
-    playerLoc.unshift(player.style.top);
-    playerLoc.unshift(player.style.left);
+    //playerLoc.unshift(player.style.top);
+    //playerLoc.unshift(player.style.left);
     player.style.height = size + '%';
     player.style.width = size + '%';
 
@@ -135,20 +137,24 @@ gameOver = () => {
 
 
 gameStart();
-
+//Function that grows snake
 const moreSnake = () => {
   if ((player.style.left.localeCompare(square.style.left) === 0) && (player.style.top.localeCompare(square.style.top) === 0)) {
     gameScore.textContent = `Score: ${++scores}`;
     ++scores;
     gameScore.textContent = `Score: ${scores}`;
+//updates squares random position
     squarePos = [ [(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size] ];
     square.style.left = squarePos[0][0] + '%';
     square.style.top = squarePos[0][1] + '%';
-    playerLoc.unshift(player.style.top);
-    playerLoc.unshift(player.style.left);
+    //playerLoc.unshift(player.style.top);
+    //playerLoc.unshift(player.style.left);
+    
+// creates a div element and appends it to the cage. Gives it the class snakeBody
     cage.append(divEl);
     divEl.className = 'snakeBody';
     player = document.querySelector('.snakeBody');
+//fix empty block bug
     if (dir === 'right') {
       playerPos[0][0] -= size;
     } else if (dir === 'left') {
@@ -159,10 +165,13 @@ const moreSnake = () => {
       playerPos[0][1] -= size;
     }
   } else {
-    playerLoc.unshift(player.style.top);
-    playerLoc.unshift(player.style.left);
-    playerLoc.pop();
-    playerLoc.pop();
+   // playerLoc.unshift(player.style.top);
+   // playerLoc.unshift(player.style.left);
+   // playerLoc.pop();
+   // playerLoc.pop();
+
+// Takes the already existing div and moves it to the end
+// It will then update the current player and updates div
     cage.append(player);
     player = document.querySelector('.snakeBody');
     divEl = document.createElement('div');
