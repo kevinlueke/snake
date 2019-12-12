@@ -22,7 +22,7 @@ const timeout = value => {
       player.style.height = size + '%';
       player.style.width = size + '%';
       k = true;
-      if (gameOver() === false) timeout(value);
+      if (dir !== null) timeout(value);
   }, 100)
 }
 //Directions the snake moves
@@ -68,20 +68,13 @@ gameStart = () => {
   square.style.top = squarePos[1] + '%';
   document.addEventListener('keydown', move);
 }
-///////////FIXXXXXXXXX
+
 gameOver = () => {
-  if (checkArray(playerLoc[0], playerLoc.slice(1))) {
     dir = null;
     playerLoc = [];
-  ++i;
-    console.log(i);
-  gameStart();
     document.removeEventListener('keydown', move);
     //cage.append(divEl);
     //divEl.className = 'dead';
-  } else {
-    return false;
-  }
 }
 
 
@@ -111,7 +104,9 @@ const moreSnake = () => {
     if (dir === 'down') playerHead[1] += size;
     playerLoc.unshift(Array.from(playerHead));
     playerLoc.pop();
-      gameOver();
+       if (checkArray(playerLoc[0], playerLoc.slice(1))) {
+         gameOver();
+       }
   }
 }
 
@@ -119,9 +114,7 @@ checkArray = (a, arr) => {
   for (const element of arr) {
     if (a[0] === element[0] && a[1] === element[1]) {
       return true;
-    } else {
-      return false;
     }
-    
   }
+  return false;  
 }
