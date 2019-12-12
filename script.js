@@ -1,6 +1,6 @@
 const cage = document.getElementById('cage');
-
-let playerPos,
+let playerHead,
+    playerLoc  = [],
   squarePos,
   dir,
   scores = 0,
@@ -9,129 +9,42 @@ let playerPos,
   player = document.querySelector('.snakeBody'),
   divEl = document.createElement('div'),
   size = 4,
-  playerLoc = [],
   i = 0,
-  j = 0,
   c = 98 / size,
   k = true;
 
+const timeout = value => {
+  setTimeout(() => {
+      ++i;
+      moreSnake();
+      player.style.top = playerHead[1] + '%';
+      player.style.left = playerHead[0] + '%';
+      player.style.height = size + '%';
+      player.style.width = size + '%';
+      k = true;
+      if (gameOver() === false) timeout(value);
+  }, 100)
+}
 //Directions the snake moves
 const move = (event) => {
-  if (k === true) {
-    if (event.key === 'ArrowRight' && dir !== 'left') {
-      k = false;
-      j = 0
+  if (k) {
+    if (typeof(dir) === 'string') {
       event.preventDefault();
-      dir = 'right';
-      let timeout = value => {
-        setTimeout(() => {
-
-
-          if (dir === 'right') {
-            moreSnake();
-            playerPos[0][0] += size;
-            // playerLoc.push(playerPos);
-            // updating snakes position
-            player.style.left = playerPos[0][0] + '%';
-            player.style.height = size + '%';
-            player.style.width = size + '%';
-            player.style.top = playerPos[0][1] + '%';
-            k = true;
-            timeout(value);
-          }
-        }, 100)
-      }
-      if (i === 0) {
-        ++i;
-        timeout(playerPos[0][0]);
-      }
-
-    } else if (event.key === 'ArrowLeft' && dir !== 'right') {
       k = false;
-      j = 0;
-      event.preventDefault();
-
-      dir = 'left';
-
-      let timeout = value => {
-        setTimeout(() => {
-
-
-          if (dir === 'left') {
-            moreSnake();
-            playerPos[0][0] -= size;
-            //playerLoc.push(playerPos);
-            player.style.left = playerPos[0][0] + '%';
-            player.style.top = playerPos[0][1] + '%';
-            player.style.height = size + '%';
-            player.style.width = size + '%';
-            k = true;
-            timeout(value);
-
-          }
-        }, 100)
-      }
-
-      if (i === 0) {
-        ++i;
-        timeout(playerPos[0][0]);
-      }
-
-    } else if (event.key === 'ArrowUp' && dir !== 'down') {
-      k = false;
-      i = 0;
-      event.preventDefault();
-
-      dir = 'up';
-      let timeout = value => {
-        setTimeout(() => {
-          if (dir === 'up') {
-            moreSnake();
-            playerPos[0][1] -= size;
-            // playerLoc.push(playerPos);
-            player.style.top = playerPos[0][1] + '%';
-            player.style.left = playerPos[0][0] + '%';
-            player.style.height = size + '%';
-            player.style.width = size + '%';
-            k = true;
-            timeout(value);
-          }
-        }, 100)
-      }
-
-      if (j === 0) {
-        ++j;
-        timeout(playerPos[0][1]);
-      }
-
-    } else if (event.key === 'ArrowDown' && dir !== 'up') {
-      k = false;
-      i = 0;
-      event.preventDefault();
-      dir = 'down';
-      let timeout = value => {
-        setTimeout(() => {
-
-          if (dir === 'down') {
-            moreSnake();
-            playerPos[0][1] += size;
-            // playerLoc.push(player.style.left);
-            player.style.top = playerPos[0][1] + '%';
-            player.style.left = playerPos[0][0] + '%';
-            player.style.height = size + '%';
-            player.style.width = size + '%';
-            k = true;
-            timeout(value);
-          }
-        }, 100)
-      }
-
-      if (j === 0) {
-        ++j;
-        timeout(playerPos[0][1]);
-      }
     }
-    //console.log(playerLoc);
+    if (event.key === 'ArrowRight' && dir !== 'left') {
+      dir = 'right';
+      i === 0 ? timeout(playerHead[0]) : i = 0;
+    } else if (event.key === 'ArrowLeft' && dir !== 'right') {
+      dir = 'left';
+      i === 0 ? timeout(playerHead[0]) : i = 0;
+    } else if (event.key === 'ArrowUp' && dir !== 'down') {
+      dir = 'up';
+      i === 0 ? timeout(playerHead[1]) : i = 0;
+    } else if (event.key === 'ArrowDown' && dir !== 'up') {
+      dir = 'down'; 
+      i === 0 ? timeout(playerHead[1]) : i = 0;
+    }
   }
 }
 gameStart = () => {
@@ -140,29 +53,35 @@ gameStart = () => {
   cage.appendChild(divEl);
   divEl.className = 'snakeBody';
   player = document.querySelector('.snakeBody');
-  playerPos = [
-    [size, size]
-  ];
-  //playerLoc.unshift(player.style.top);
-  //playerLoc.unshift(player.style.left);
+  playerHead = [size, size];
+  playerLoc.push(Array.from(playerHead));
   player.style.height = size + '%';
   player.style.width = size + '%';
 
-  player.style.left = playerPos[0][0] + '%';
-  player.style.top = playerPos[0][1] + '%';
-  squarePos = [
-    [(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size]
-  ];
+  player.style.left = playerHead[0] + '%';
+  player.style.top = playerHead[1] + '%';
+  squarePos = [(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size];
   square.style.height = size + '%';
   square.style.width = size + '%';
 
-  square.style.left = squarePos[0][0] + '%';
-  square.style.top = squarePos[0][1] + '%';
+  square.style.left = squarePos[0] + '%';
+  square.style.top = squarePos[1] + '%';
   document.addEventListener('keydown', move);
 }
-
+///////////FIXXXXXXXXX
 gameOver = () => {
-
+  if (checkArray(playerLoc[0], playerLoc.slice(1))) {
+    dir = null;
+    playerLoc = [];
+  ++i;
+    console.log(i);
+  gameStart();
+    document.removeEventListener('keydown', move);
+    //cage.append(divEl);
+    //divEl.className = 'dead';
+  } else {
+    return false;
+  }
 }
 
 
@@ -170,43 +89,39 @@ gameOver = () => {
 gameStart();
 //Function that grows snake
 const moreSnake = () => {
-  if ((player.style.left.localeCompare(square.style.left) === 0) && (player.style.top.localeCompare(square.style.top) === 0)) {
+  if ((player.style.left === square.style.left) && (player.style.top === square.style.top)) {
     gameScore.textContent = `Score: ${++scores}`;
     //updates squares random position
-    squarePos = [
-      [(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size]
-    ];
-    square.style.left = squarePos[0][0] + '%';
-    square.style.top = squarePos[0][1] + '%';
-    //playerLoc.unshift(player.style.top);
-    //playerLoc.unshift(player.style.left);
-
+    squarePos = [(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size];
+    square.style.left = squarePos[0] + '%';
+    square.style.top = squarePos[1] + '%';
+    playerLoc.unshift(Array.from(playerHead));
     // creates a div element and appends it to the cage. Gives it the class snakeBody
     cage.append(divEl);
-    divEl.className = 'snakeBody';
-    player = document.querySelector('.snakeBody');
-    //fix empty block bug
-    if (dir === 'right') {
-      playerPos[0][0] -= size;
-    } else if (dir === 'left') {
-      playerPos[0][0] += size;
-    } else if (dir === 'up') {
-      playerPos[0][1] += size;
-    } else if (dir === 'down') {
-      playerPos[0][1] -= size;
-    }
-  } else {
-    // playerLoc.unshift(player.style.top);
-    // playerLoc.unshift(player.style.left);
-    // playerLoc.pop();
-    // playerLoc.pop();
-
+    divEl.className = 'snakeBody'; 
+     } else {
     // Takes the already existing div and moves it to the end
     // It will then update the current player and updates div
-    console.log(playerPos);
     cage.append(player);
     player = document.querySelector('.snakeBody');
     divEl = document.createElement('div');
-    gameOver();
+    if (dir === 'right') playerHead[0] += size;
+    if (dir === 'left') playerHead[0] -= size;
+    if (dir === 'up') playerHead[1] -= size;
+    if (dir === 'down') playerHead[1] += size;
+    playerLoc.unshift(Array.from(playerHead));
+    playerLoc.pop();
+      gameOver();
+  }
+}
+
+checkArray = (a, arr) => {
+  for (const element of arr) {
+    if (a[0] === element[0] && a[1] === element[1]) {
+      return true;
+    } else {
+      return false;
+    }
+    
   }
 }

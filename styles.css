@@ -32,3 +32,10 @@
   display: inline-block;
   font-size: 2rem;
 }
+
+.dead {
+  margin: 0 auto;
+  background-color: rebbecapurple;
+  height: 100vh;
+  width: 100vh;
+}
