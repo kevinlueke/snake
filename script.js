@@ -1,6 +1,6 @@
 const cage = document.getElementById('cage');
 let playerHead,
-    playerLoc  = [],
+  playerLoc = [],
   squarePos,
   dir,
   scores = 0,
@@ -15,14 +15,14 @@ let playerHead,
 
 const timeout = value => {
   setTimeout(() => {
-      ++i;
-      moreSnake();
-      player.style.top = playerHead[1] + '%';
-      player.style.left = playerHead[0] + '%';
-      player.style.height = size + '%';
-      player.style.width = size + '%';
-      k = true;
-      if (gameOver() === false) timeout(value);
+    ++i;
+    moreSnake();
+    player.style.top = playerHead[1] + '%';
+    player.style.left = playerHead[0] + '%';
+    player.style.height = size + '%';
+    player.style.width = size + '%';
+    k = true;
+    timeout(value);
   }, 100)
 }
 //Directions the snake moves
@@ -42,7 +42,7 @@ const move = (event) => {
       dir = 'up';
       i === 0 ? timeout(playerHead[1]) : i = 0;
     } else if (event.key === 'ArrowDown' && dir !== 'up') {
-      dir = 'down'; 
+      dir = 'down';
       i === 0 ? timeout(playerHead[1]) : i = 0;
     }
   }
@@ -69,20 +69,20 @@ gameStart = () => {
   document.addEventListener('keydown', move);
 }
 ///////////FIXXXXXXXXX
-gameOver = () => {
+/*gameOver = () => {
   if (checkArray(playerLoc[0], playerLoc.slice(1))) {
     dir = null;
     playerLoc = [];
   ++i;
     console.log(i);
-  gameStart();
+  //gameStart();
     document.removeEventListener('keydown', move);
     //cage.append(divEl);
     //divEl.className = 'dead';
   } else {
     return false;
   }
-}
+}*/
 
 
 
@@ -98,8 +98,8 @@ const moreSnake = () => {
     playerLoc.unshift(Array.from(playerHead));
     // creates a div element and appends it to the cage. Gives it the class snakeBody
     cage.append(divEl);
-    divEl.className = 'snakeBody'; 
-     } else {
+    divEl.className = 'snakeBody';
+  } else {
     // Takes the already existing div and moves it to the end
     // It will then update the current player and updates div
     cage.append(player);
@@ -111,8 +111,11 @@ const moreSnake = () => {
     if (dir === 'down') playerHead[1] += size;
     playerLoc.unshift(Array.from(playerHead));
     playerLoc.pop();
-      gameOver();
-  }
+    if (playerHead[0] < 0 ||
+        playerHead[1] < 0 ||
+        playerHead[0] > 96 ||
+        playerHead[1] > 96) gameOver();
+}
 }
 
 checkArray = (a, arr) => {
@@ -122,6 +125,6 @@ checkArray = (a, arr) => {
     } else {
       return false;
     }
-    
+
   }
 }
