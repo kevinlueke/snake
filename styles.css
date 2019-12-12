@@ -4,9 +4,14 @@
   box-sizing: border-Box;
 }
 
+body {
+  background-color: #000;
+}
+
 #cage {
   margin: 0 auto;
-  border: 2vh solid #cc0000;
+  background-color: #000000;
+  border: 1vh solid #16324c;
   height: 90vh;
   width:  90vh;
   position: relative;
@@ -14,28 +19,29 @@
 }
 
 .snakeBody {
-  background-color: black;
+  background-color: #34de00;
   position: absolute;
   border-radius: 25%;
 }
 
 #square {
-  background-color: red;
+  background-color: #fd0101;
   position: absolute;
   border-radius: 25%;
 }
 
 #score {
   position: absolute;
+  color: grey;
   top: 1rem;
-  left: 15rem;
+  left: 12rem;
   display: inline-block;
-  font-size: 2rem;
+  font-size: 5rem;
 }
 
-.dead {
+/*.dead {
   margin: 0 auto;
-  background-color: rebbecapurple;
+  background-color: darkred;
   height: 100vh;
   width: 100vh;
-}
+}*/
