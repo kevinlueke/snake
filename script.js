@@ -1,6 +1,6 @@
 const cage = document.getElementById('cage');
 let playerHead,
-    playerLoc  = [],
+  playerLoc = [],
   squarePos,
   dir,
   scores = 0,
@@ -42,7 +42,7 @@ const move = (event) => {
       dir = 'up';
       i === 0 ? timeout(playerHead[1]) : i = 0;
     } else if (event.key === 'ArrowDown' && dir !== 'up') {
-      dir = 'down'; 
+      dir = 'down';
       i === 0 ? timeout(playerHead[1]) : i = 0;
     }
   }
@@ -77,8 +77,6 @@ gameOver = () => {
     //divEl.className = 'dead';
 }
 
-
-
 gameStart();
 //Function that grows snake
 const moreSnake = () => {
@@ -91,8 +89,8 @@ const moreSnake = () => {
     playerLoc.unshift(Array.from(playerHead));
     // creates a div element and appends it to the cage. Gives it the class snakeBody
     cage.append(divEl);
-    divEl.className = 'snakeBody'; 
-     } else {
+    divEl.className = 'snakeBody';
+  } else {
     // Takes the already existing div and moves it to the end
     // It will then update the current player and updates div
     cage.append(player);
@@ -104,9 +102,11 @@ const moreSnake = () => {
     if (dir === 'down') playerHead[1] += size;
     playerLoc.unshift(Array.from(playerHead));
     playerLoc.pop();
-       if (checkArray(playerLoc[0], playerLoc.slice(1))) {
-         gameOver();
-       }
+       if (checkArray(playerLoc[0], playerLoc.slice(1)) ||
+        playerHead[0] < 0 ||
+        playerHead[1] < 0 ||
+        playerHead[0] > 96 ||
+        playerHead[1] > 96) gameOver();
   }
 }
 
