@@ -10,6 +10,7 @@ let playerHead,
   player = document.querySelector('.snakeBody'),
   divEl = document.createElement('div'),
   reset = document.getElementById('reset'),
+  die = document.getElementById('dead'),
   size = 4,
   i,
   c = 98 / size,
@@ -93,10 +94,15 @@ gameOver = () => {
   while (cage.firstChild) {
       cage.firstChild.remove();
     }
+  die.className = 'die';
+  die.textContent = `YOU ARE DEAD SCORE: ${scores} Click Anywhere To Replay`;
   window.removeEventListener('keydown', move);
-  gameStart();
-  //cage.append(divEl);
-  //divEl.className = 'dead';
+  window.addEventListener('click', dead = () => {
+    die.classList.remove('die');
+    removeEventListener('click', dead);
+    gameStart();
+  })
+ // document.getElementById('dead').style.
 }
 
 gameStart();
@@ -106,7 +112,7 @@ const moreSnake = () => {
     gameScore.textContent = `Score: ${++scores}`;
     //updates squares random position
     squarePos = [[(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size]];
-    if (checkArray(squarePos[0], playerLoc)) squarePos = [[(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size]];
+    while (checkArray(squarePos[0], playerLoc)) squarePos = [[(Math.floor(Math.random() * c)) * size, (Math.floor(Math.random() * c)) * size]];
     square.style.left = squarePos[0][0] + '%';
     square.style.top = squarePos[0][1] + '%';
     playerLoc.unshift(Array.from(playerHead));
