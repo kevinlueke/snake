@@ -102,7 +102,6 @@ gameOver = () => {
     removeEventListener('click', dead);
     gameStart();
   })
- // document.getElementById('dead').style.
 }
 
 gameStart();
