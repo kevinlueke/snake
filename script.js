@@ -31,25 +31,25 @@ const timeout = value => {
 //Directions the snake moves
 const move = (event) => {
   if (deBounce) {
-    if (event.key === 'ArrowRight' && dir !== 'left') {
+    if ((event.key === 'ArrowRight' || event.key === 'd') && dir !== 'left') {
       dir = 'right';
       lose = false;
       deBounce = false;
       i === 0 ? timeout(playerHead[0]) : i = 0;
         event.preventDefault();
-    } else if (event.key === 'ArrowLeft' && dir !== 'right') {
+    } else if ((event.key === 'ArrowLeft' || event.key === 'a') && dir !== 'right') {
       dir = 'left';
       lose = false;
       deBounce = false;
       i === 0 ? timeout(playerHead[0]) : i = 0;
         event.preventDefault();
-    } else if (event.key === 'ArrowUp' && dir !== 'down') {
+    } else if ((event.key === 'ArrowUp' || event.key === 'w') && dir !== 'down') {
       dir = 'up';
       lose = false;
       deBounce = false;
       i === 0 ? timeout(playerHead[1]) : i = 0;
         event.preventDefault();
-    } else if (event.key === 'ArrowDown' && dir !== 'up') {
+    } else if ((event.key === 'ArrowDown' || event.key === 's') && dir !== 'up') {
       dir = 'down';
       lose = false;
       deBounce = false;
